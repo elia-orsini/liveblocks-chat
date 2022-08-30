@@ -44,63 +44,64 @@ function ChatImplementation() {
     <div className="h-full bg-silver-800 w-screen">
       <div className="mx-auto max-h-screen h-screen bg-gray-100 sm:w-3/5 sm:border border-gray-400">
         <div className="w-full h-full">
-
-        <div className="font-normal uppercase py-2 bg-gray-400 px-2 text-center">
-          <h3>{other}</h3>
-          <div className="font-semibold text-xs">
-            {others.count ? (
-              <p className="text-green-800">ONLINE</p>
-            ) : (
-              <p className="text-red-800">OFFLINE</p>
-            )}
+          <div className="font-normal uppercase py-2 bg-gray-400 px-2 text-center">
+            <h3>{other}</h3>
+            <div className="font-semibold text-xs">
+              {others.count ? (
+                <p className="text-green-800">ONLINE</p>
+              ) : (
+                <p className="text-red-800">OFFLINE</p>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div className="h-5/6 overflow-y-auto snap-end bg-gray-100 pt-2 pb-4 px-2 text-right ">
+          <div className="h-5/6 overflow-y-auto snap-end bg-gray-100 pt-2 pb-4 px-2 text-right ">
             {chat.map((msg, index) => {
               return (
                 <div
-                key={index}
-                className={`sm:px-10 mt-2 ${
-                  msg.sender == you ? "text-right" : "text-left"
-                }`}
+                  key={index}
+                  className={`sm:px-10 mt-2 ${
+                    msg.sender == you ? "text-right" : "text-left"
+                  }`}
                 >
                   <span
                     className={`px-3 font-light py-1 rounded-xl bg-black ${
-                      msg.sender == you ? "bg-blue-500 text-white rounded-br-none" : "bg-gray-300 text-black rounded-bl-none"
+                      msg.sender == you
+                        ? "bg-blue-500 text-white rounded-br-none"
+                        : "bg-gray-300 text-black rounded-bl-none"
                     }`}
-                    >
+                  >
                     {msg.text}
                   </span>
                 </div>
               );
             })}
 
-          <div className="">
-            <SomeoneIsTyping />
-          </div>
+            <div className="">
+              <SomeoneIsTyping />
+            </div>
 
-          <div className="absolute right-0 bottom-4 sm:bottom-8 w-screen sm:w-3/5 sm:right-auto pr-3">
-            <input
-              type="text"
-              placeholder="enter message"
-              className="rounded-2xl placeholder:text-gray-400 placeholder:font-light px-3 w-4/5 sm:w-3/5"
-              value={draft}
-              onChange={(e) => {
-                setDraft(e.target.value);
-                updateMyPresence({ isTyping: true });
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updateMyPresence({ isTyping: false });
-                  chat.push({ text: draft, sender: you });
-                  setDraft("");
-                }
-              }}
-              onBlur={() => updateMyPresence({ isTyping: false })}
-            />
+            <div className="absolute right-0 bottom-4 sm:bottom-8 w-screen sm:w-3/5 sm:right-auto pr-3">
+              <input
+                type="text"
+                placeholder="enter message"
+                className="rounded-2xl placeholder:text-gray-400 placeholder:font-light px-3 w-4/5 sm:w-3/5"
+                value={draft}
+                onChange={(e) => {
+                  setDraft(e.target.value);
+                  updateMyPresence({ isTyping: true });
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    updateMyPresence({ isTyping: false });
+                    chat.push({ text: draft, sender: you });
+                    setDraft("");
+                  }
+                }}
+                onBlur={() => updateMyPresence({ isTyping: false })}
+              />
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
